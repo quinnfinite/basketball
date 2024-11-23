@@ -1,40 +1,10 @@
-import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
-import { TeamsSchema } from './schemas'
+import { OpenAPIHono } from '@hono/zod-openapi'
+import { route as baseRoute, handler as baseHandler } from './teamId'
+import { route as teamIdRoute, handler as teamIdHandler } from './teamId'
 
 const teams = new OpenAPIHono()
 
-const route = createRoute({
-    method: 'get',
-    path: '/',
-    responses: {
-      200: {
-        content: {
-          'application/json': {
-            schema: TeamsSchema,
-          },
-        },
-        description: 'Retrieve all teams',
-      },
-    },
-})
-
-const handler = (c) => {
-    return c.json(
-        [
-            {
-                "id": 14,
-                "conference": "MY-West",
-                "division": "Pacific",
-                "city": "Los Angeles",
-                "name": "Lakers",
-                "full_name": "Los Angeles Lakers",
-                "abbreviation": "LAL"
-            }            
-        ],
-        200
-    )
-}
-
-teams.openapi(route, handler)
+teams.openapi(baseRoute, baseHandler)
+teams.openapi(teamIdRoute, teamIdHandler)
 
 export default teams;
