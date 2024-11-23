@@ -16,9 +16,11 @@ app.doc('/doc', {
 app.get(
   '/',
   apiReference({
+    pageTitle: 'Basketball API Reference',
     spec: {
       url: '/doc',
     },
+    darkMode: true
   }),
 )
 
