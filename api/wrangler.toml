@@ -1,4 +1,4 @@
-name = "api"
+name = "basketball-api"
 main = "src/index.ts"
 compatibility_date = "2024-11-22"
 
