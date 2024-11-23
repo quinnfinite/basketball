@@ -1,5 +1,6 @@
 import { createRoute } from '@hono/zod-openapi'
 import { TeamNameAndPlayerCountSchema } from '../../schemas/team'
+import { ErrorSchema } from '../../schemas/error'
 import ballDontLieRequest from '../../lib/ballDontLie'
 import { PlayerCountByRound, Player } from '../../types'
 
@@ -20,6 +21,14 @@ const route = createRoute({
         },
         description: 'Retrieve player count by round for a specific team',
       },
+      500: {
+        content: {
+          'application/json': {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Error"
+      }
     },
 })
 

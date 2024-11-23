@@ -1,5 +1,6 @@
 import { createRoute } from '@hono/zod-openapi'
 import { PlayersSchema } from '../../schemas/player'
+import { ErrorSchema } from '../../schemas/error'
 import { Player } from '../../types'
 import ballDontLieRequest from '../../lib/ballDontLie'
 
@@ -15,6 +16,14 @@ const route = createRoute({
         },
         description: 'Retrieve all players',
       },
+      500: {
+        content: {
+          'application/json': {
+            schema: ErrorSchema,
+          },
+        },
+        description: "Error"
+      }
     },
 })
 
