@@ -25,5 +25,12 @@ export const TeamSchema = z
     }),
   })
   .openapi('Team')
-
+  
 export const TeamsSchema = z.array(TeamSchema)
+
+export const TeamNameAndPlayerCountSchema = z.object({
+    team_name: z.string().openapi({
+        example: "Lakers"
+    }),
+    draft_rounds: z.record(z.string(), z.number())
+})

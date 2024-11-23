@@ -1,6 +1,7 @@
 import { createRoute } from '@hono/zod-openapi'
-import { TeamSchema } from './schemas'
+import { TeamSchema } from '../../schemas/team'
 import ballDontLieRequest from '../../lib/ballDontLie'
+import { Team } from '../../types'
 
 const route = createRoute({
     method: 'get',
@@ -24,7 +25,7 @@ const handler = async (c) => {
 
     const endpoint = `teams/${teamId}`
 
-    const team = await ballDontLieRequest(BALL_DONT_LIE_API_KEY, endpoint)
+    const team: Team = await ballDontLieRequest(BALL_DONT_LIE_API_KEY, endpoint)
 
     return c.json(
       team,
