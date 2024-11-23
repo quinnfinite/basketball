@@ -22,7 +22,7 @@ const route = createRoute({
             schema: ErrorSchema,
           },
         },
-        description: "Error"
+        description: "Error retrieving specific team"
       }
     },
 })

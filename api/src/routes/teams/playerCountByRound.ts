@@ -27,7 +27,7 @@ const route = createRoute({
             schema: ErrorSchema,
           },
         },
-        description: "Error"
+        description: "Error team and player count by round"
       }
     },
 })
