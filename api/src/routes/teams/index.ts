@@ -8,4 +8,5 @@ const teams = new OpenAPIHono()
 teams.openapi(baseRoute, baseHandler)
 teams.openapi(teamIdRoute, teamIdHandler)
 teams.openapi(playerCountByRoundRoute, playerCountByRoundHandler)
+
 export default teams;

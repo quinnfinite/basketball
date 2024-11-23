@@ -1,7 +1,7 @@
 import { apiReference } from '@scalar/hono-api-reference'
 import { OpenAPIHono } from '@hono/zod-openapi'
 import teams from './routes/teams'
-
+import players from './routes/players'
 const app = new OpenAPIHono()
 
 // The OpenAPI documentation will be available at /doc
@@ -23,5 +23,6 @@ app.get(
 )
 
 app.route('/teams', teams)
+app.route('/players', players)
 
 export default app

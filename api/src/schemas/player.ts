@@ -41,3 +41,6 @@ export const PlayerSchema = z.object({
     }),
     team: TeamSchema
 })
+.openapi('Player')
+
+export const PlayersSchema = z.array(PlayerSchema)
