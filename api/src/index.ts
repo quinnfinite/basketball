@@ -1,7 +1,9 @@
 import { apiReference } from '@scalar/hono-api-reference'
 import { OpenAPIHono } from '@hono/zod-openapi'
+import { HTTPException } from 'hono/http-exception'
 import teams from './routes/teams'
 import players from './routes/players'
+
 const app = new OpenAPIHono()
 
 // The OpenAPI documentation will be available at /doc
@@ -23,6 +25,10 @@ app.get(
     darkMode: true
   }),
 )
+
+app.all('*', (c)=> {
+  throw new HTTPException(404, { message: '404 Not Found.\nIf you are attempting to use an endpoint with an id, make sure to include the specified id in your request' })
+})
 
 app.route('/teams', teams)
 app.route('/players', players)
