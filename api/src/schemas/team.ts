@@ -28,9 +28,19 @@ export const TeamSchema = z
   
 export const TeamsSchema = z.array(TeamSchema)
 
+const DraftRoundsCountSchema = z.object({
+    "1": z.number().openapi({ example: 13 }),
+    "2": z.number().openapi({ example: 7 }),
+    "null": z.number().openapi({ example: 5 })
+})
+
 export const TeamNameAndPlayerCountSchema = z.object({
     team_name: z.string().openapi({
-        example: "Lakers"
+        example: "Golden State Warriors"
     }),
-    draft_rounds: z.record(z.string(), z.number())
+    /*
+    Note: z.record may be more precise, but if not using strict mode,
+    validation will still pass, and the example in the hosted documentation is better
+    */
+    draft_rounds: DraftRoundsCountSchema
 })
