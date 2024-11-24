@@ -7,5 +7,9 @@ export default defineWorkersConfig({
         wrangler: { configPath: "./wrangler.toml" },
       },
     },
+    reporters: ['default','html'],
+    outputFile: {
+        html: './public/static/test-results/index.html'
+    }
   },
 });

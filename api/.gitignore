@@ -1,5 +1,10 @@
 # prod
 dist/
+# exclude everything in public directory
+public/*
+
+# exception to the rule
+!public/.gitkeep
 
 # dev
 .yarn/
