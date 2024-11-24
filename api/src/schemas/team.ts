@@ -3,7 +3,7 @@ import { z } from '@hono/zod-openapi'
 export const TeamSchema = z
   .object({
     id: z.string().openapi({
-      example: '14',
+      example: '10',
     }),
     conference: z.string().openapi({
         example: 'West',
@@ -12,16 +12,16 @@ export const TeamSchema = z
         example: 'Pacific',
     }),
     city: z.string().openapi({
-        example: 'Los Angeles',
+        example: 'Golden State',
     }),        
     name: z.string().openapi({
-      example: 'Lakers',
+      example: 'Warriors',
     }),
     full_name: z.string().openapi({
-        example: 'Los Angeles Lakers',
+        example: "Golden State Warriors",
     }),
     abbreviation: z.string().openapi({
-        example: 'LAL',
+        example: 'GSW',
     }),
   })
   .openapi('Team')
