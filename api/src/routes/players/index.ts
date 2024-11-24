@@ -1,8 +1,8 @@
 import { OpenAPIHono } from '@hono/zod-openapi'
-import { route as baseRoute, handler as baseHandler } from './base'
+import base from './base'
 
 const players = new OpenAPIHono()
 
-players.openapi(baseRoute, baseHandler)
+players.route('/', base)
 
 export default players;

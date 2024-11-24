@@ -1,12 +1,13 @@
 import { OpenAPIHono } from '@hono/zod-openapi'
-import { route as baseRoute, handler as baseHandler } from './base'
-import { route as teamIdRoute, handler as teamIdHandler } from './teamId'
-import { route as playerCountByRoundRoute, handler as playerCountByRoundHandler } from './playerCountByRound'
+import base from './base';
+import teamId from './teamId'
+import playerCountByRound from './playerCountByRound';
 
 const teams = new OpenAPIHono()
 
-teams.openapi(baseRoute, baseHandler)
-teams.openapi(teamIdRoute, teamIdHandler)
-teams.openapi(playerCountByRoundRoute, playerCountByRoundHandler)
+// Work-around for larger routing in Hono - https://hono.dev/docs/guides/best-practices#building-a-larger-application
+teams.route('/', base)
+teams.route('/', teamId)
+teams.route('/', playerCountByRound)
 
 export default teams;

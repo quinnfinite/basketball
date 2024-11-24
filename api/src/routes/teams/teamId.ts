@@ -1,17 +1,21 @@
-import { createRoute } from '@hono/zod-openapi'
-import { TeamSchema } from '../../schemas/team'
+import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
+import { TeamsSchema } from '../../schemas/team'
 import { ErrorSchema } from '../../schemas/error'
 import ballDontLieRequest from '../../lib/ballDontLie'
 import { Team } from '../../types'
+import { env } from 'hono/adapter'
+import { HTTPException } from 'hono/http-exception'
+
+const teamId = new OpenAPIHono()
 
 const route = createRoute({
     method: 'get',
-    path: '/{id}',
+    path: '/{teamId}',
     responses: {
       200: {
         content: {
           'application/json': {
-            schema: TeamSchema,
+            schema: TeamsSchema,
           },
         },
         description: 'Retrieve specific team',
@@ -27,19 +31,34 @@ const route = createRoute({
     },
 })
 
-const handler = async (c) => {
-    const teamId = c.req.param('id')
+teamId.openapi(
+  route, 
+  async (c) => {
+      const teamId = c.req.param('teamId')
 
-    const { BALL_DONT_LIE_API_KEY } = c.env
+      const { BALL_DONT_LIE_API_KEY } = env<{ BALL_DONT_LIE_API_KEY: string }>(c)
 
-    const endpoint = `teams/${teamId}`
+      const endpoint = `teams/${teamId}`
 
-    const team: Team = await ballDontLieRequest(BALL_DONT_LIE_API_KEY, endpoint)
+      try {
 
-    return c.json(
-      team,
-        200
-    )
-}
+        const teams: Array<Team> = await ballDontLieRequest(BALL_DONT_LIE_API_KEY, endpoint)
 
-export { route, handler };
+        return c.json(
+          teams,
+          200
+        )
+
+      } catch(error) {
+
+        const message = `Error retrieving team with teamId ${teamId}.\nConfirm the teamId uses is valid and try again`;
+
+        const cause = (error as Error).message;
+
+        throw new HTTPException(500, { message, cause })
+
+      }
+  }
+)
+
+export default teamId

@@ -28,10 +28,12 @@ export const TeamSchema = z
   
 export const TeamsSchema = z.array(TeamSchema)
 
-const DraftRoundsCountSchema = z.object({
-    "1": z.number().openapi({ example: 13 }),
-    "2": z.number().openapi({ example: 7 }),
-    "null": z.number().openapi({ example: 5 })
+// Because we are not using 'strict', additional fields will be valid
+// z.record(z.string(), z.number()) would be preferred. But this renders in a weird way on the generated documentation via @scalar/hono-api-reference
+export const PlayerCountByDraftRoundSchema = z.object({
+    "1": z.number().optional().openapi({ example: 13 }),
+    "2": z.number().optional().openapi({ example: 7 }),
+    "null": z.number().optional().openapi({ example: 5 }),
 })
 
 export const TeamNameAndPlayerCountSchema = z.object({
@@ -42,5 +44,5 @@ export const TeamNameAndPlayerCountSchema = z.object({
     Note: z.record may be more precise, but if not using strict mode,
     validation will still pass, and the example in the hosted documentation is better
     */
-    draft_rounds: DraftRoundsCountSchema
+    draft_rounds: PlayerCountByDraftRoundSchema
 })

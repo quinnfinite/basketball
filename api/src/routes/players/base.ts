@@ -3,6 +3,10 @@ import { PlayersSchema } from '../../schemas/player'
 import { ErrorSchema } from '../../schemas/error'
 import { Player } from '../../types'
 import ballDontLieRequest from '../../lib/ballDontLie'
+import { env } from 'hono/adapter'
+import { OpenAPIHono } from '@hono/zod-openapi'
+
+const base = new OpenAPIHono()
 
 const route = createRoute({
     method: 'get',
@@ -27,14 +31,18 @@ const route = createRoute({
     },
 })
 
-const handler = async (c) => {
-    const { BALL_DONT_LIE_API_KEY } = c.env
-    const players: Array<Player> = await ballDontLieRequest(BALL_DONT_LIE_API_KEY, 'players')
+base.openapi(
+  route,
+  async (c) => {
+      const { BALL_DONT_LIE_API_KEY } = env<{ BALL_DONT_LIE_API_KEY: string }>(c)
 
-    return c.json(
-        players,
-        200
-    )
-}
+      const players: Array<Player> = await ballDontLieRequest(BALL_DONT_LIE_API_KEY, 'players')
 
-export { route, handler }
+      return c.json(
+          players,
+          200
+      )
+  }
+)
+
+export default base;
