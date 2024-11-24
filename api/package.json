@@ -2,7 +2,8 @@
   "name": "api",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy --minify"
+    "deploy": "wrangler deploy --minify",
+    "lint": "npx eslint"
   },
   "dependencies": {
     "@hono/zod-openapi": "^0.18.0",
@@ -11,7 +12,11 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241112.0",
+    "@eslint/js": "^9.15.0",
     "@types/node": "^22.9.2",
+    "eslint": "^9.15.0",
+    "globals": "^15.12.0",
+    "typescript-eslint": "^8.15.0",
     "wrangler": "^3.88.0"
   }
 }
