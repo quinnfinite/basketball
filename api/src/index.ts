@@ -11,7 +11,7 @@ const app = new OpenAPIHono()
 app.use(logger())
 
 // The OpenAPI documentation will be available at /doc
-app.doc('/doc', {
+app.doc('/openapi.json', {
   openapi: '3.0.0',
   info: {
     version: '1.0.0',
@@ -24,7 +24,7 @@ app.get(
   apiReference({
     pageTitle: 'Basketball API Reference',
     spec: {
-      url: '/doc',
+      url: '/openapi.json',
     },
     darkMode: true
   }),
