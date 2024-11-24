@@ -42,8 +42,10 @@ app.onError((err, c) => {
 })
 
 // Keep wildcard for 404 as last registered route
-app.all('*', (c)=> {
-  throw new HTTPException(404, { message: '404 Not Found.\nIf you are attempting to use an endpoint with an id, make sure to include the specified id in your request' })
+app.all('*', ()=> {
+  throw new HTTPException(404, {
+    message: '404 Not Found.\nIf you are attempting to use an endpoint with an id, make sure to include the specified id in your request'
+  })
 })
 
 export default app
