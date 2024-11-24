@@ -30,7 +30,7 @@ const route = createRoute({
       }
     },
 })
-// players.reduce((playerCount: PlayerCountByDraftRound, player: Player)
+
 const getPlayerCountByRound = (players: Array<Player>): PlayerCountByDraftRound => players.reduce((playerCount: PlayerCountByDraftRound, player: Player) => {
   const { draft_round: draftRound } = player
 
