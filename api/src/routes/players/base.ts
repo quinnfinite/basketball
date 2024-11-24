@@ -11,6 +11,7 @@ const base = new OpenAPIHono()
 const route = createRoute({
     method: 'get',
     path: '/',
+    summary: 'Retrieve all players',
     responses: {
       200: {
         content: {
@@ -18,7 +19,7 @@ const route = createRoute({
             schema: PlayersSchema,
           },
         },
-        description: 'Retrieve all players',
+        description: 'Array of objects with player data',
       },
       500: {
         content: {
@@ -26,7 +27,7 @@ const route = createRoute({
             schema: ErrorSchema,
           },
         },
-        description: "Error retrieving all players"
+        description: "Object with error message, and cause"
       }
     },
 })

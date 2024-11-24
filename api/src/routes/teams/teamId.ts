@@ -11,6 +11,8 @@ const teamId = new OpenAPIHono()
 const route = createRoute({
     method: 'get',
     path: '/{teamId}',
+    summary: "Retrieve a specific team",
+    description: "A valid team id is required as part of the request. Valid team ids can be found by requesting all teams.",
     responses: {
       200: {
         content: {
@@ -18,7 +20,7 @@ const route = createRoute({
             schema: TeamsSchema,
           },
         },
-        description: 'Retrieve specific team',
+        description: 'Object with Team data',
       },
       500: {
         content: {
@@ -26,7 +28,7 @@ const route = createRoute({
             schema: ErrorSchema,
           },
         },
-        description: "Error retrieving specific team"
+        description: "Object with error message, and cause"
       }
     },
 })

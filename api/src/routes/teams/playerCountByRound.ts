@@ -11,6 +11,8 @@ const playerCountByRound = new OpenAPIHono()
 const route = createRoute({
     method: 'get',
     path: '/{teamId}/playerCountByRound',
+    summary: "Retrieve player count by draft round for a specific team",
+    description: "A valid team id is required as part of the request. Valid team ids can be found by requesting all teams. NOTE: This endpoint will not return full team data. Only name, and player count by draft round",
     responses: {
       200: {
         content: {
@@ -18,7 +20,7 @@ const route = createRoute({
             schema: TeamNameAndPlayerCountSchema,
           },
         },
-        description: 'Retrieve player count by round for a specific team',
+        description: 'Object with team name and player count by draft round',
       },
       500: {
         content: {
@@ -26,7 +28,7 @@ const route = createRoute({
             schema: ErrorSchema,
           },
         },
-        description: "Error team and player count by round"
+        description: "Object with error message, and cause"
       }
     },
 })
