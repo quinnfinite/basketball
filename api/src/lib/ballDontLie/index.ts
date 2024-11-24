@@ -1,6 +1,6 @@
 const BASE_URL = "https://api.balldontlie.io/v1/"
 
-async function ballDontLieRequest<T> (apiKey:string , endpoint: string): Promise<T> {
+async function ballDontLie<T> (apiKey:string , endpoint: string): Promise<T> {
     const url = `${BASE_URL}${endpoint}`;
 
     const response = await fetch(url, {
@@ -18,4 +18,4 @@ async function ballDontLieRequest<T> (apiKey:string , endpoint: string): Promise
     return json.data;
 } 
 
-export default ballDontLieRequest
+export default ballDontLie

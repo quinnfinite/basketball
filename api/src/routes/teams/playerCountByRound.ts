@@ -1,7 +1,7 @@
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
 import { TeamNameAndPlayerCountSchema } from '../../schemas/team'
 import { ErrorSchema } from '../../schemas/error'
-import ballDontLieRequest from '../../lib/ballDontLie'
+import ballDontLie from '../../lib/ballDontLie'
 import { TeamNameAndPlayerCount, PlayerCountByDraftRound, Player } from '../../types'
 import { env } from 'hono/adapter'
 import { HTTPException } from 'hono/http-exception'
@@ -52,7 +52,7 @@ playerCountByRound.openapi(
 
     try {
 
-      const players: Array<Player> = await ballDontLieRequest(BALL_DONT_LIE_API_KEY, endpoint)
+      const players: Array<Player> = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
 
       const playerCountByRound = getPlayerCountByRound(players);
 

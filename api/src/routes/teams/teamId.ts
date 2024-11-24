@@ -1,7 +1,7 @@
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
 import { TeamsSchema } from '../../schemas/team'
 import { ErrorSchema } from '../../schemas/error'
-import ballDontLieRequest from '../../lib/ballDontLie'
+import ballDontLie from '../../lib/ballDontLie'
 import { Team } from '../../types'
 import { env } from 'hono/adapter'
 import { HTTPException } from 'hono/http-exception'
@@ -42,7 +42,7 @@ teamId.openapi(
 
       try {
 
-        const teams: Array<Team> = await ballDontLieRequest(BALL_DONT_LIE_API_KEY, endpoint)
+        const teams: Array<Team> = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
 
         return c.json(
           teams,
