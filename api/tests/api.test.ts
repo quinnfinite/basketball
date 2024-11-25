@@ -27,15 +27,6 @@ import { PlayerSchema } from "../src/schemas/player";
 
   describe("Basketball API", () => {
     it("Teams endpoint returns list of teams", async () => {
-      const goldenStateWarriorsTeamInfo = {
-        "id":10,
-        "conference":"West",
-        "division":"Pacific",
-        "city":"Golden State",
-        "name":"Warriors",
-        "full_name":"Golden State Warriors",
-        "abbreviation":"GSW"
-      }
       const endpoint = `/teams`
       const request = new IncomingRequest(`${BASE_URL}${endpoint}`);
       // Create an empty context to pass to `worker.fetch()`
