@@ -70,7 +70,7 @@ export const RetrievePlayersCountByDraftRoundQuerySchema = z.object({
                 in: 'query'
             },
             example: '1,2,null',
-            description: 'Valid rounds for counting players'
+            description: "Valid rounds for counting players. If you want all rounds, use the string 'all'"
         }),
     allTime: z.enum(["true", 'false'])
         .optional()

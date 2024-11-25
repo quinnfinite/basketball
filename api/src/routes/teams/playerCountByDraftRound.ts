@@ -7,12 +7,23 @@ import {
 import { pick } from '../../helpers'
 import { ErrorSchema } from '../../schemas/error'
 import ballDontLie from '../../lib/ballDontLie'
-import type { TeamNameAndPlayerCount, PlayerCountByDraftRound, Player, Players } from '../../types'
+import type {
+  TeamNameAndPlayerCount,
+  PlayerCountByDraftRound,
+  Player,
+  Players
+} from '../../types'
 import { env } from 'hono/adapter'
 import { HTTPException } from 'hono/http-exception'
-import { DEFAULT_CURSOR, MAX_CURSOR } from '../../constants'
+import {
+  DEFAULT_CURSOR,
+  MAX_CURSOR,
+  DEFAULT_VALID_ROUNDS
+} from '../../constants'
 
 const playerCountByDraftRound = new OpenAPIHono()
+
+type ValidRounds = Array<string> | null
 
 const route = createRoute({
     method: 'get',
@@ -43,6 +54,12 @@ const route = createRoute({
     },
 })
 
+// Helper functions
+const getValidRounds = (rounds: string): ValidRounds => {
+  if (rounds?.toLowerCase() === 'all') return null;
+  return rounds?.split(',') || DEFAULT_VALID_ROUNDS
+}
+
 const getPlayerCountByDraftRound = (players: Array<Player>): PlayerCountByDraftRound => players.reduce((playerCount: PlayerCountByDraftRound, player: Player) => {
   const { draft_round: draftRound } = player
 
@@ -53,6 +70,7 @@ const getPlayerCountByDraftRound = (players: Array<Player>): PlayerCountByDraftR
   return playerCount
 }, {})
 
+// Adding Route and Hanlder
 playerCountByDraftRound.openapi(
   route,
   async (c) => {
@@ -68,14 +86,14 @@ playerCountByDraftRound.openapi(
 
     const cursor = isAllTime ? MAX_CURSOR : DEFAULT_CURSOR
 
-    const validRounds = rounds?.split(',')
+    const validRounds: ValidRounds = getValidRounds(rounds)
 
     try {
       const cursorQueue: Array<number> = [cursor]
 
       let validPlayers: Players = []
 
-      for (let cursor of cursorQueue) {
+      for (const cursor of cursorQueue) {
 
         const { data, meta }  = await ballDontLie(BALL_DONT_LIE_API_KEY, `${endpoint}&cursor=${cursor}`)
 
@@ -86,7 +104,6 @@ playerCountByDraftRound.openapi(
         validPlayers = validPlayers.concat(playersInValidRounds)
 
         if (isAllTime && meta.next_cursor) {
-          console.log({ isAllTime, nextCursor: meta.next_cursor })
           cursorQueue.push(meta.next_cursor)
         }
 

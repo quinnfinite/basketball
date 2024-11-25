@@ -4,6 +4,6 @@ export interface BallDontLieMetadata {
 }
 
 export interface BallDontLieResponse {
-    data: Array<Object>,
+    data: Array<object>,
     meta: BallDontLieMetadata
 }

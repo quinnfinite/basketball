@@ -1,5 +1,9 @@
 import { z } from '@hono/zod-openapi'
-import { TeamSchema, TeamNameAndPlayerCountSchema, TeamsSchema } from './schemas/team'
+import {
+    TeamSchema,
+    TeamNameAndPlayerCountSchema,
+    TeamsSchema
+} from './schemas/team'
 import { PlayerSchema, PlayersSchema } from './schemas/player'
 
 export type Team = z.infer<typeof TeamSchema>
