@@ -1,5 +1,9 @@
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
-import { RetrieveTeamParamsSchema, TeamNameAndPlayerCountSchema } from '../../schemas/team'
+import {
+  RetrievePlayersCountByDraftRoundQuerySchema,
+  RetrieveTeamParamsSchema,
+  TeamNameAndPlayerCountSchema
+} from '../../schemas/team'
 import { pick } from '../../helpers'
 import { ErrorSchema } from '../../schemas/error'
 import ballDontLie from '../../lib/ballDontLie'
@@ -16,6 +20,7 @@ const route = createRoute({
     description: "A valid team id is required as part of the request. Valid team ids can be found by requesting all teams. NOTE: This endpoint will not return full team data. Only name, and player count by draft round",
     request: {
       params: RetrieveTeamParamsSchema,
+      query: RetrievePlayersCountByDraftRoundQuerySchema
     },
     responses: {
       200: {
@@ -54,7 +59,10 @@ playerCountByDraftRound.openapi(
 
     const { BALL_DONT_LIE_API_KEY } = env<{ BALL_DONT_LIE_API_KEY: string }>(c)
 
-    const endpoint = `players?team_ids[]=${teamId}&per_page=${100}`
+    const endpoint = `players?team_ids[]=${teamId}`
+
+    const { rounds } = c.req.query()
+    const validRounds = rounds?.split(',')
 
     try {
       const players: Array<Player> = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
@@ -63,9 +71,13 @@ playerCountByDraftRound.openapi(
 
       const teamName: string = players[0].team.full_name
 
+      const pickedPlayerCountByDraftRound: PlayerCountByDraftRound = validRounds
+        ? pick(playerCountByDraftRound, validRounds)
+        : playerCountByDraftRound
+
       const response: TeamNameAndPlayerCount = {
           team_name: teamName,
-          draft_rounds: pick(playerCountByDraftRound, ['1', '2', 'null'])
+          draft_rounds: pickedPlayerCountByDraftRound
       }
 
       return c.json(

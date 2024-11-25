@@ -60,3 +60,16 @@ export const RetrieveTeamParamsSchema = z.object({
         description: "The ID of the team to retrieve. If you don't know the id, use the /teams endpoint"
       }),
 })
+
+export const RetrievePlayersCountByDraftRoundQuerySchema = z.object({
+    rounds: z.string()
+    .optional()
+    .openapi({
+        param: {
+            name: 'rounds',
+            in: 'query'
+        },
+        example: '1,2,null',
+        description: 'Valid rounds for counting players'
+    }),
+})
