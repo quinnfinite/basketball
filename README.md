@@ -1,9 +1,7 @@
 # Basketball Application
 
-This repository is meant to be a mono repo.
+This repository is a intended as a mono repo. For specific application information, refer to it's README
 
-Applications
+Applications README's
 - [API - Readme](./api/README.md) 
-
-Future applications, such as a Front End app to consume the API, would be added to this directory.
 

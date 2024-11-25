@@ -7,7 +7,6 @@
 The above demo is hosted on Cloudflare Workers
 
 
-
 ## Local Setup
 
 1. Register for API Key from [Ball Don't Lie](https://www.balldontlie.io/#getting-started)
@@ -30,3 +29,30 @@ The above demo is hosted on Cloudflare Workers
     ```
     npm test
     ```
+
+## Specific Endpoint that meets Assessment Criteria
+
+Per instructions, I got a little creative and decided to add additional endpoints.
+
+The endpoint that was built specifically for assesment criteria is:
+
+Retrieve player count by draft round for a specific team ```/teams/{teamId}/playerCountByDraftRound```
+
+See [player count by draft round in the api playground](https://basketball-api.quinn-royston.workers.dev/#tag/default/GET/teams/{teamId}/playerCountByDraftRound) for specific documentation
+
+Based on assumptions, I added a few points of functionality. See [Assumptions Section](#Assumptions) below for more details.
+
+## Assumptions
+
+From the assessment doc: “So, we are looking for a consolidated data to see how many players are from round 1 and round 2.”
+
+- The text suggests active players only, but the suggested endpoint does not differentiate, and the players/active endpoint is not available for free.
+    - Assumption: The suggested https://www.balldontlie.io/api/v1/players endpoint is sufficient.
+
+- The text also suggests only round 1 and round 2, but the example shows round 1, round 2, and null.
+    - Assumption: The default rounds to be counted are rounds 1, 2, and null.
+    - Just in case, the API allows for specified or all rounds to be included in the count
+
+- The example also only displays the first 25 players.
+    - Assumption: The default behavior should be to count based on the first 25 players
+    - Just in case, the API allows counting ALL players from the Ball Dont Lie by draft round that belong to the specified team
