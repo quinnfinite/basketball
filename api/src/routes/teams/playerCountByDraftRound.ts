@@ -7,9 +7,10 @@ import {
 import { pick } from '../../helpers'
 import { ErrorSchema } from '../../schemas/error'
 import ballDontLie from '../../lib/ballDontLie'
-import type { TeamNameAndPlayerCount, PlayerCountByDraftRound, Player } from '../../types'
+import type { TeamNameAndPlayerCount, PlayerCountByDraftRound, Player, Players } from '../../types'
 import { env } from 'hono/adapter'
 import { HTTPException } from 'hono/http-exception'
+import { DEFAULT_CURSOR, MAX_CURSOR } from '../../constants'
 
 const playerCountByDraftRound = new OpenAPIHono()
 
@@ -42,7 +43,7 @@ const route = createRoute({
     },
 })
 
-const getplayerCountByDraftRound = (players: Array<Player>): PlayerCountByDraftRound => players.reduce((playerCount: PlayerCountByDraftRound, player: Player) => {
+const getPlayerCountByDraftRound = (players: Array<Player>): PlayerCountByDraftRound => players.reduce((playerCount: PlayerCountByDraftRound, player: Player) => {
   const { draft_round: draftRound } = player
 
   const currentCountAtDraftRound = playerCount[draftRound]
@@ -63,16 +64,37 @@ playerCountByDraftRound.openapi(
 
     const { rounds, allTime } = c.req.query()
 
+    const isAllTime = allTime?.toLowerCase() === 'true'
+
+    const cursor = isAllTime ? MAX_CURSOR : DEFAULT_CURSOR
+
     const validRounds = rounds?.split(',')
 
     try {
-      const { data }  = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
+      const cursorQueue: Array<number> = [cursor]
 
-      const players = data as Array<Player>
+      let validPlayers: Players = []
 
-      const playerCountByDraftRound: PlayerCountByDraftRound = getplayerCountByDraftRound(players);
+      for (let cursor of cursorQueue) {
 
-      const teamName: string = players[0].team.full_name
+        const { data, meta }  = await ballDontLie(BALL_DONT_LIE_API_KEY, `${endpoint}&cursor=${cursor}`)
+
+        const players = data as Array<Player>
+
+        const playersInValidRounds = validRounds ? players.filter((player) => validRounds.includes(String(player.draft_round))) : players
+
+        validPlayers = validPlayers.concat(playersInValidRounds)
+
+        if (isAllTime && meta.next_cursor) {
+          console.log({ isAllTime, nextCursor: meta.next_cursor })
+          cursorQueue.push(meta.next_cursor)
+        }
+
+      }
+
+      const playerCountByDraftRound: PlayerCountByDraftRound = getPlayerCountByDraftRound(validPlayers);
+
+      const teamName: string = validPlayers[0].team.full_name
 
       const pickedPlayerCountByDraftRound: PlayerCountByDraftRound = validRounds
         ? pick(playerCountByDraftRound, validRounds)
