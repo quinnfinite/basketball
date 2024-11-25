@@ -6,7 +6,6 @@ import { TeamNameAndPlayerCount, PlayerCountByDraftRound, Player } from '../../t
 import { env } from 'hono/adapter'
 import { HTTPException } from 'hono/http-exception'
 
-// Consider renaming to playerCountByDraftRound
 const playerCountByDraftRound = new OpenAPIHono()
 
 const route = createRoute({
