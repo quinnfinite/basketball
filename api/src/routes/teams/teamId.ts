@@ -46,8 +46,9 @@ teamId.openapi(
       const endpoint = `teams/${teamId}`
 
       try {
+        const { data } = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
 
-        const teams: Array<Team> = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
+        const teams = data as Array<Team>
 
         return c.json(
           teams,

@@ -1,6 +1,9 @@
+import type { BallDontLieResponse } from './types'
+
 const BASE_URL = "https://api.balldontlie.io/v1/"
 
-async function ballDontLie<JsonData> (apiKey:string , endpoint: string): Promise<JsonData> {
+
+async function ballDontLie (apiKey:string , endpoint: string): Promise<BallDontLieResponse> {
     const url = `${BASE_URL}${endpoint}`;
 
     const response = await fetch(url, {
@@ -13,9 +16,9 @@ async function ballDontLie<JsonData> (apiKey:string , endpoint: string): Promise
       throw new Error(`Request to Ball Don't Lie Failed. Response status: ${response.status}`);
     }
 
-    const json = await response.json<{ data: JsonData }>();
-    
-    return json.data;
+    const json = await response.json<BallDontLieResponse>();
+
+    return json;
 } 
 
 export default ballDontLie

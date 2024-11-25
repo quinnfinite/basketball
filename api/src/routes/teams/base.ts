@@ -38,7 +38,9 @@ base.openapi(
     const { BALL_DONT_LIE_API_KEY } = env<{ BALL_DONT_LIE_API_KEY: string }>(c)
 
     try {
-      const teams: Array<Team> = await ballDontLie(BALL_DONT_LIE_API_KEY, 'teams')
+      const { data } = await ballDontLie(BALL_DONT_LIE_API_KEY, 'teams')
+
+      const teams = data as Array<Team>
 
       return c.json(
         teams,

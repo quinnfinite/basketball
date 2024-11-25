@@ -49,7 +49,9 @@ base.openapi(
 
       const endpoint: string = `players?cursor=${cursor}&${perPage}`
 
-      const players: Array<Player> = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
+      const { data } = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
+
+      const players = data as Array<Player>
 
       return c.json(
           players,

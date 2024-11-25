@@ -62,10 +62,13 @@ playerCountByDraftRound.openapi(
     const endpoint = `players?team_ids[]=${teamId}`
 
     const { rounds, allTime } = c.req.query()
+
     const validRounds = rounds?.split(',')
 
     try {
-      const players: Array<Player> = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
+      const { data }  = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
+
+      const players = data as Array<Player>
 
       const playerCountByDraftRound: PlayerCountByDraftRound = getplayerCountByDraftRound(players);
 
