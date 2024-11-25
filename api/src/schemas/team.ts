@@ -2,8 +2,8 @@ import { z } from '@hono/zod-openapi'
 
 export const TeamSchema = z
   .object({
-    id: z.string().openapi({
-      example: '10',
+    id: z.number().openapi({
+      example: 10,
     }),
     conference: z.string().openapi({
         example: 'West',

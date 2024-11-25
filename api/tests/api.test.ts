@@ -2,7 +2,7 @@ import {
     env,
     createExecutionContext,
     waitOnExecutionContext,
-  } from "cloudflare:test";
+} from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 import { TeamSchema } from '../src/schemas/team'
 import type {
@@ -49,7 +49,7 @@ import { PlayerSchema } from "../src/schemas/player";
       const goldenStateWarriorsTeamId: number = 10;
 
       const goldenStateWarriorsTeamInfo: Team = {
-        "id": '10',
+        "id": 10,
         "conference":"West",
         "division":"Pacific",
         "city":"Golden State",
