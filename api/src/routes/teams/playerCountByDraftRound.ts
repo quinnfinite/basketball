@@ -61,7 +61,7 @@ playerCountByDraftRound.openapi(
 
     const endpoint = `players?team_ids[]=${teamId}`
 
-    const { rounds } = c.req.query()
+    const { rounds, allTime } = c.req.query()
     const validRounds = rounds?.split(',')
 
     try {

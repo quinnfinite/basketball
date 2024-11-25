@@ -63,13 +63,23 @@ export const RetrieveTeamParamsSchema = z.object({
 
 export const RetrievePlayersCountByDraftRoundQuerySchema = z.object({
     rounds: z.string()
-    .optional()
-    .openapi({
-        param: {
-            name: 'rounds',
-            in: 'query'
-        },
-        example: '1,2,null',
-        description: 'Valid rounds for counting players'
-    }),
+        .optional()
+        .openapi({
+            param: {
+                name: 'rounds',
+                in: 'query'
+            },
+            example: '1,2,null',
+            description: 'Valid rounds for counting players'
+        }),
+    allTime: z.enum(["true", 'false'])
+        .optional()
+        .openapi({
+            param: {
+                name: 'allTime',
+                in: 'query'
+            },
+            example: 'false',
+            description: 'If true, will go through our full dataset'
+        }),
 })

@@ -47,17 +47,17 @@ export const PlayersSchema = z.array(PlayerSchema)
 
 // Params & Query Schemas
 export const RetrievePlayersQuerySchema = z.object({
-    cursor: z.string()
+    cursor: z.coerce.number()
       .optional()
       .openapi({
         param: {
           name: 'cursor',
           in: 'query',
         },
-        example: '0',
+        example: 0,
         description: 'The cursor, used for pagination'
     }),
-    perPage: z.string()
+    perPage: z.coerce.number()
       .max(100)
       .optional()
       .openapi({
@@ -65,7 +65,7 @@ export const RetrievePlayersQuerySchema = z.object({
           name: 'perPage',
           in: 'query',
         },
-        example: '25',
+        example: 25,
         description: 'The number of players per page. Default is 25. Max is 100'
     }),
 })
