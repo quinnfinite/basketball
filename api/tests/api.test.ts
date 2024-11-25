@@ -79,7 +79,7 @@ import { PlayerSchema } from "../src/schemas/player";
           "null": 5
         }
       }
-      const endpoint = `/teams/${goldenStateWarriorsTeamId}/playerCountByRound`
+      const endpoint = `/teams/${goldenStateWarriorsTeamId}/playerCountByDraftRound`
       const request = new IncomingRequest(`${BASE_URL}${endpoint}`);
       // Create an empty context to pass to `worker.fetch()`
       const ctx = createExecutionContext();

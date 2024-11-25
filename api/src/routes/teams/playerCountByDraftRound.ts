@@ -6,11 +6,12 @@ import { TeamNameAndPlayerCount, PlayerCountByDraftRound, Player } from '../../t
 import { env } from 'hono/adapter'
 import { HTTPException } from 'hono/http-exception'
 
-const playerCountByRound = new OpenAPIHono()
+// Consider renaming to playerCountByDraftRound
+const playerCountByDraftRound = new OpenAPIHono()
 
 const route = createRoute({
     method: 'get',
-    path: '/{teamId}/playerCountByRound',
+    path: '/{teamId}/playerCountByDraftRound',
     summary: "Retrieve player count by draft round for a specific team",
     description: "A valid team id is required as part of the request. Valid team ids can be found by requesting all teams. NOTE: This endpoint will not return full team data. Only name, and player count by draft round",
     responses: {
@@ -33,7 +34,7 @@ const route = createRoute({
     },
 })
 
-const getPlayerCountByRound = (players: Array<Player>): PlayerCountByDraftRound => players.reduce((playerCount: PlayerCountByDraftRound, player: Player) => {
+const getplayerCountByDraftRound = (players: Array<Player>): PlayerCountByDraftRound => players.reduce((playerCount: PlayerCountByDraftRound, player: Player) => {
   const { draft_round: draftRound } = player
 
   const currentCountAtDraftRound = playerCount[draftRound]
@@ -43,7 +44,7 @@ const getPlayerCountByRound = (players: Array<Player>): PlayerCountByDraftRound 
   return playerCount
 }, {})
 
-playerCountByRound.openapi(
+playerCountByDraftRound.openapi(
   route,
   async (c) => {
     const teamId = c.req.param('teamId')
@@ -56,13 +57,13 @@ playerCountByRound.openapi(
 
       const players: Array<Player> = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
 
-      const playerCountByRound = getPlayerCountByRound(players);
+      const playerCountByDraftRound = getplayerCountByDraftRound(players);
 
       const teamName = players[0].team.full_name
 
       const response: TeamNameAndPlayerCount = {
           team_name: teamName,
-          draft_rounds: playerCountByRound
+          draft_rounds: playerCountByDraftRound
       }
 
       return c.json(
@@ -81,4 +82,4 @@ playerCountByRound.openapi(
   }
 )
 
-export default playerCountByRound
+export default playerCountByDraftRound
