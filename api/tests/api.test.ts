@@ -5,7 +5,13 @@ import {
   } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 import { TeamSchema } from '../src/schemas/team'
-import type { Team, Teams, TeamNameAndPlayerCount, Player, Players } from "../src/types";
+import type {
+  Team,
+  Teams,
+  TeamNameAndPlayerCount,
+  Player,
+  Players
+} from "../src/types";
 import worker from "../src";
 import { PlayerSchema } from "../src/schemas/player";
   

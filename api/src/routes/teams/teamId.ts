@@ -2,7 +2,7 @@ import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
 import { RetrieveTeamParamsSchema, TeamsSchema } from '../../schemas/team'
 import { ErrorSchema } from '../../schemas/error'
 import ballDontLie from '../../lib/ballDontLie'
-import { Team } from '../../types'
+import type { Team } from '../../types'
 import { env } from 'hono/adapter'
 import { HTTPException } from 'hono/http-exception'
 

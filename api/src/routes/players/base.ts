@@ -1,7 +1,7 @@
 import { createRoute } from '@hono/zod-openapi'
 import { PlayersSchema } from '../../schemas/player'
 import { ErrorSchema } from '../../schemas/error'
-import { Player } from '../../types'
+import type { Player } from '../../types'
 import ballDontLie from '../../lib/ballDontLie'
 import { env } from 'hono/adapter'
 import { OpenAPIHono } from '@hono/zod-openapi'
