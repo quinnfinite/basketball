@@ -47,12 +47,15 @@ Based on assumptions, I added a few points of functionality. See [Assumptions Se
 From the assessment doc: “So, we are looking for a consolidated data to see how many players are from round 1 and round 2.”
 
 - The text suggests active players only, but the suggested endpoint does not differentiate, and the players/active endpoint is not available for free.
-    - Assumption: The suggested https://www.balldontlie.io/api/v1/players endpoint is sufficient.
+    - **Assumption**: The suggested https://www.balldontlie.io/api/v1/players endpoint is sufficient.
 
 - The text also suggests only round 1 and round 2, but the example shows round 1, round 2, and null.
-    - Assumption: The default rounds to be counted are rounds 1, 2, and null.
+    - **Assumption**: The default rounds to be counted are rounds 1, 2, and null.
     - Just in case, the API allows for specified or all rounds to be included in the count
 
 - The example also only displays the first 25 players.
-    - Assumption: The default behavior should be to count based on the first 25 players
+    - **Assumption**: The default behavior should be to count based on the first 25 players
     - Just in case, the API allows counting ALL players from the Ball Dont Lie by draft round that belong to the specified team
+
+- camelCase vs snake_case
+    - **Assumption**: Because this api mostly returns data from an external API, I left the return shape (and return schemas) to use snake casing such as ```draft_round```, but maintained camel casing throughout the typescript code. If I was working with a team, this could change based on organizational standards/best practices.
