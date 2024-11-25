@@ -70,7 +70,7 @@ import { PlayerSchema } from "../src/schemas/player";
       expect(result).toEqual(goldenStateWarriorsTeamInfo);
     });
     
-    it("Player Count By Draft Round returns correct team information", async () => {
+    it("Player Count By Draft Round endpoint returns correct team information", async () => {
       const goldenStateWarriorsTeamId: number = 10;
 
       const goldenStateWarriorsTeamInfo: TeamNameAndPlayerCount = {
