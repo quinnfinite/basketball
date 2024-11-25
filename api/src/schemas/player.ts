@@ -1,7 +1,7 @@
 import { z } from '@hono/zod-openapi'
 
 import { TeamSchema } from './team'
-
+import { BallDontLieResponseSchema } from '../lib/ballDontLie/schema'
 export const PlayerSchema = z.object({
     id: z.string().openapi({
         example: '19',
@@ -44,6 +44,8 @@ export const PlayerSchema = z.object({
 .openapi('Player')
 
 export const PlayersSchema = z.array(PlayerSchema)
+
+export const PlayersResponseSchema = BallDontLieResponseSchema.extend({ data: PlayersSchema })
 
 // Params & Query Schemas
 export const RetrievePlayersQuerySchema = z.object({

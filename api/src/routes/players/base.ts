@@ -1,7 +1,7 @@
 import { createRoute } from '@hono/zod-openapi'
-import { PlayersSchema } from '../../schemas/player'
+import { PlayersResponseSchema } from '../../schemas/player'
 import { ErrorSchema } from '../../schemas/error'
-import type { Player } from '../../types'
+import type { PlayersResponse } from '../../types'
 import ballDontLie from '../../lib/ballDontLie'
 import { env } from 'hono/adapter'
 import { OpenAPIHono } from '@hono/zod-openapi'
@@ -13,7 +13,7 @@ const base = new OpenAPIHono()
 const route = createRoute({
     method: 'get',
     path: '/',
-    summary: 'Retrieve all players',
+    summary: 'Retrieve players',
     request: {
       query: RetrievePlayersQuerySchema
     },
@@ -21,7 +21,7 @@ const route = createRoute({
       200: {
         content: {
           'application/json': {
-            schema: PlayersSchema,
+            schema: PlayersResponseSchema
           },
         },
         description: 'Array of objects with player data',
@@ -49,12 +49,10 @@ base.openapi(
 
       const endpoint: string = `players?cursor=${cursor}&${perPage}`
 
-      const { data } = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
-
-      const players = data as Array<Player>
+      const response = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint) as PlayersResponse
 
       return c.json(
-          players,
+          response,
           200
       )
   }

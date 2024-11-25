@@ -1,9 +1,4 @@
-export interface BallDontLieMetadata {
-    next_cursor: number,
-    per_page: number
-}
+import { z } from '@hono/zod-openapi'
+import { BallDontLieResponseSchema } from './schema'
 
-export interface BallDontLieResponse {
-    data: Array<object>,
-    meta: BallDontLieMetadata
-}
+export type BallDontLieResponse = z.infer<typeof BallDontLieResponseSchema>
