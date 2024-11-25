@@ -7,12 +7,16 @@
 The above demo is hosted on Cloudflare Workers
 
 
+
 ## Local Setup
 
 1. Register for API Key from [Ball Don't Lie](https://www.balldontlie.io/#getting-started)
 
-1. Create ```.dev.vars``` file in root
-Add ```BALL_DONT_LIE_API_KEY = {INSERT_YOUR_API_KEY}``` to .dev.
+1. Navigate to root directory of api
+
+1. Create ```.dev.vars``` file in root (```/api```)
+
+1. Add ```BALL_DONT_LIE_API_KEY = {INSERT_YOUR_API_KEY}``` to ```.dev.vars```
 
 1. Install Dependencies
     ```
@@ -22,7 +26,7 @@ Add ```BALL_DONT_LIE_API_KEY = {INSERT_YOUR_API_KEY}``` to .dev.
     ```
     npm run dev
     ```
-1. Run Tests
+1. Run Tests (optional)
     ```
     npm test
     ```
