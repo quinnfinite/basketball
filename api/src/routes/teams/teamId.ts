@@ -1,5 +1,5 @@
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
-import { TeamsSchema } from '../../schemas/team'
+import { RetrieveTeamParamsSchema, TeamsSchema } from '../../schemas/team'
 import { ErrorSchema } from '../../schemas/error'
 import ballDontLie from '../../lib/ballDontLie'
 import { Team } from '../../types'
@@ -13,6 +13,9 @@ const route = createRoute({
     path: '/{teamId}',
     summary: "Retrieve a specific team",
     description: "A valid team id is required as part of the request. Valid team ids can be found by requesting all teams.",
+    request: {
+      params: RetrieveTeamParamsSchema
+    },
     responses: {
       200: {
         content: {

@@ -46,3 +46,17 @@ export const TeamNameAndPlayerCountSchema = z.object({
     */
     draft_rounds: PlayerCountByDraftRoundSchema
 })
+
+// Params & Query Schemas
+export const RetrieveTeamParamsSchema = z.object({
+    teamId: z
+      .string()
+      .openapi({
+        param: {
+          name: 'teamId',
+          in: 'path',
+        },
+        example: '10',
+        description: "The ID of the team to retrieve. If you don't know the id, use the /teams endpoint"
+      }),
+})

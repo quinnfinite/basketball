@@ -5,6 +5,8 @@ import { Player } from '../../types'
 import ballDontLie from '../../lib/ballDontLie'
 import { env } from 'hono/adapter'
 import { OpenAPIHono } from '@hono/zod-openapi'
+import { RetrievePlayersQuerySchema } from '../../schemas/player'
+import { DEFAULT_CURSOR, DEFAULT_PER_PAGE } from '../../constants'
 
 const base = new OpenAPIHono()
 
@@ -12,6 +14,9 @@ const route = createRoute({
     method: 'get',
     path: '/',
     summary: 'Retrieve all players',
+    request: {
+      query: RetrievePlayersQuerySchema
+    },
     responses: {
       200: {
         content: {
@@ -37,7 +42,14 @@ base.openapi(
   async (c) => {
       const { BALL_DONT_LIE_API_KEY } = env<{ BALL_DONT_LIE_API_KEY: string }>(c)
 
-      const players: Array<Player> = await ballDontLie(BALL_DONT_LIE_API_KEY, 'players')
+      const {
+        cursor = DEFAULT_CURSOR,
+        perPage = DEFAULT_PER_PAGE
+      } = c.req.query();
+
+      const endpoint: string = `players?cursor=${cursor}&${perPage}`
+
+      const players: Array<Player> = await ballDontLie(BALL_DONT_LIE_API_KEY, endpoint)
 
       return c.json(
           players,
