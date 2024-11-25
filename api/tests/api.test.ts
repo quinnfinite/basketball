@@ -10,7 +10,8 @@ import type {
   Teams,
   TeamNameAndPlayerCount,
   Player,
-  Players
+  Players,
+  PlayersResponse
 } from "../src/types";
 import worker from "../src";
 import { PlayerSchema } from "../src/schemas/player";
@@ -102,10 +103,10 @@ import { PlayerSchema } from "../src/schemas/player";
       const response = await worker.fetch(request, env, ctx);
 
       await waitOnExecutionContext(ctx);
-      const result: Players = await response.json();
+      const result: PlayersResponse = await response.json();
 
-      expect(result).toHaveProperty('length') // Verifies that result is an array
-      expect(result).toSatisfy(allPlayersMatchShape) // Verifies player shape
+      expect(result.data).toHaveProperty('length') // Verifies that result is an array
+      expect(result.data).toSatisfy(allPlayersMatchShape) // Verifies player shape
     });    
 
   });
