@@ -57,5 +57,11 @@ From the assessment doc: “So, we are looking for a consolidated data to see ho
     - **Assumption**: The default behavior should be to count based on the first 25 players
     - Just in case, the API allows counting ALL players from the Ball Dont Lie by draft round that belong to the specified team
 
-- camelCase vs snake_case
-    - **Assumption**: Because this api mostly returns data from an external API, I left the return shape (and return schemas) to use snake casing such as ```draft_round```, but maintained camel casing throughout the typescript code. If I was working with a team, this could change based on organizational standards/best practices.
+
+- Return data shape
+    - camelCase vs snake_case
+        - **Assumption**: Because this api mostly returns data from an external API, I left the return shape (and return schemas) to use snake casing such as ```draft_round```, but maintained camel casing throughout the typescript code.
+        - In a team setting, this could change based on organizational standards/best practices.
+    - Most endpoints return the list of objects directly. In some cases such as ```/players``` the return shape is modified to include meta data.
+        - **Assumption**: Because most endpoints don't necessitate the use of metadata, an exception was made to the return shape of ```/players``` instead of this shape being standard.
+        - In a team setting, this would be worth discussing the pros and cons of from a user perspective.
